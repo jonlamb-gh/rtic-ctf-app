@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# This script will regenerate the source code for the given configuration files.
+# See https://barectf.org/docs for more information.
+#
+# Dependencies:
+# * barectf : pip3 install barectf
+
+set -e
+
+mkdir -p c/source
+mkdir -p c/include
+
+barectf generate \
+    --code-dir=c/source \
+    --headers-dir=c/include \
+    config.yaml
+
+# Show the config
+barectf show-effective-configuration config.yaml
+
+exit 0

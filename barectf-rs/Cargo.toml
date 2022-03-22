@@ -1,0 +1,19 @@
+[package]
+name = "barectf-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jon Lamb"]
+build = "build.rs"
+
+[dependencies]
+cty = "0.2"
+bbqueue = "0.5"
+
+[dependencies.static_assertions]
+version = "1.1"
+default-features = false
+features = []
+
+[build-dependencies]
+cc = "1.0"
+bindgen = "0.59"

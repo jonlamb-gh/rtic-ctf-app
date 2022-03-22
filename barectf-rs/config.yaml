@@ -1,0 +1,50 @@
+%YAML 1.2
+--- !<tag:barectf.org,2020/3/config>
+trace:
+  type:
+    $include:
+      - stdint.yaml
+      - stdreal.yaml
+      - stdmisc.yaml
+      - lttng-ust-log-levels.yaml
+    native-byte-order: little-endian
+    $features:
+      # 32 bit magic number
+      magic-field-type: uint32
+      # 8 bit stream ID
+      data-stream-type-id-field-type: uint8
+    clock-types:
+      default:
+        uuid: 87d4506a-e981-4caf-aee6-093d496afd08
+        description: "32-bit ms clock"
+        $c-type: uint32_t
+        frequency: 1000 # 1 kHz
+        precision: 1
+        origin-is-unix-epoch: false
+    data-stream-types:
+      default:
+        $is-default: true
+        $default-clock-type-name: default
+        $features:
+          packet:
+            # 32 bit timestamps
+            beginning-timestamp-field-type: uint32
+            end-timestamp-field-type: uint32
+            # 16 bit size fields
+            total-size-field-type: uint16
+            content-size-field-type: uint16
+            discarded-event-records-counter-snapshot-field-type: uint16
+            # 32 bit sequence number
+            sequence-number-field-type: uint16
+          event-record:
+            # 8 bit event IDs
+            type-id-field-type: uint8
+            # 32 bit timestamp
+            timestamp-field-type: uint32
+        event-record-types:
+          event_a: {}
+          event_b:
+            payload-field-type:
+              class: structure
+              members:
+                - ms: uint32
